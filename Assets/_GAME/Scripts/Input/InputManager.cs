@@ -61,8 +61,12 @@ public class InputManager : MonoBehaviour {
 		
 	void Update()
 	{
-		if(!GameRoomManager.Instance.m_player.GetComponent<PhotonView>().IsMine)
-			return;
+		if (GameStateManager.Instance._gameState == GameState.Multiplayer)
+		{
+			if(!GameRoomManager.Instance.m_player.GetComponent<PhotonView>().IsMine)
+				return;
+		}
+		
 		//use keyboard
 		//if (UseKeyboardInput) KeyboardControls();
 

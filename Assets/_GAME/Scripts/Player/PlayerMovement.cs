@@ -89,10 +89,14 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
 		
 	//physics update
 	void FixedUpdate() {
-		if (!_photonView.IsMine)
+		if (GameStateManager.Instance._gameState == GameState.Multiplayer)
 		{
-			return;
+			if (!_photonView.IsMine)
+			{
+				return;
+			}
 		}
+		
 
 		//check if we are on the ground
 		isGrounded = IsGrounded();
@@ -142,9 +146,12 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
 
 	//user input
 	void InputEvent(Vector2 dir) {
-		if (!_photonView.IsMine)
+		if (GameStateManager.Instance._gameState == GameState.Multiplayer)
 		{
-			return;
+			if (!_photonView.IsMine)
+			{
+				return;
+			}
 		}
 		
 		inputDirection = dir;
@@ -159,10 +166,14 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
 
 	//input actions
 	void InputEventAction(INPUTACTION action) {
-		if (!_photonView.IsMine)
+		if (GameStateManager.Instance._gameState == GameState.Multiplayer)
 		{
-			return;
+			if (!_photonView.IsMine)
+			{
+				return;
+			}
 		}
+		
 		
 		//jump
 		if(MovementStates.Contains(playerState.currentState) && !isDead) {

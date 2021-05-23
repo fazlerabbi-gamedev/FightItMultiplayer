@@ -18,7 +18,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     
     
     public string _appVersion = "0.1";
-    public int _maxPlayer = 4;
+    public int _maxPlayer = 3;
     public int _gameSceneIndex;
     
     [Space(25)]
