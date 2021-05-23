@@ -15,9 +15,16 @@ public class LobbyChat : bl_PhotonHelper
     [Header("Chat")]
     public TMP_Text ChatText = null;
     public static Text CacheChat = null;
+    [Space(10)]
+    public bool isVisible = true;
+    public int MaxMsn = 7;
     
-    
-    
+    [Space(10)]
+    [HideInInspector] public List<string> messages = new List<string>();
+    public static readonly string ChatRPC = "Chat";
+    private float m_alpha = 2f;
+    private bool isChat = false;
+    private string inputLine = "";
     
     
     
@@ -27,7 +34,7 @@ public class LobbyChat : bl_PhotonHelper
     /// <param name="msn"></param>
     // public static void SendChat(string sender, string msn)
     // {
-    //     CacheChat.text += "\n ["+ bl_CoopUtils.CoopColorStr(sender) + "] " + msn;
+    //     CacheChat.text += " ["+ bl_CoopUtils.CoopColorStr(sender) + "] " + msn;
     // }
     /// <summary>
     /// Add text sync
@@ -40,13 +47,61 @@ public class LobbyChat : bl_PhotonHelper
         i.text = string.Empty;
     }
 
+    void Closet()
+    {
+        isChat = false;
+        GUI.FocusControl("");
+    }
+
     [PunRPC]
     void AddChat(string text,PhotonMessageInfo p)
     {
-        ChatText.text += "\n (" + bl_CoopUtils.CoopColorStr(p.Sender.NickName) + "): " + text;
+        m_alpha = 7;
+        string senderName = "anonymous";
+
+        if (p.Sender != null)
+        {
+            if (!string.IsNullOrEmpty(p.Sender.NickName))
+            {
+                senderName = p.Sender.NickName;
+            }
+            else
+            {
+                senderName = "player " + p.Sender.UserId;
+            }
+        }
+        
+        this.messages.Add(" (" + bl_CoopUtils.CoopColorStr(senderName) + "): " + text);
+        if (messages.Count > MaxMsn)
+        {
+            messages.RemoveAt(0);
+        }
+        
+        ChatText.text = "";
+        foreach (string m in messages)
+        {
+            ChatText.text += m + "\n";
+        }
+        
+        //ChatText.text += "\n (" + bl_CoopUtils.CoopColorStr(p.Sender.NickName) + "): " + text;
+        
     }
     
-    
+    public void AddLine(string newLine)
+    {
+        m_alpha = 7;
+        this.messages.Add(newLine);
+        if (messages.Count > MaxMsn)
+        {
+            messages.RemoveAt(0);
+        }
+    }
+    public void Refresh()
+    {
+        ChatText.text = "";
+        foreach (string m in messages)
+            ChatText.text += m + "\n";
+    }
     
     
 }
