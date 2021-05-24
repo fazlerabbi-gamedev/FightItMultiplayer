@@ -146,10 +146,10 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject> {
 	}
 
 	void Update() {
-		if (!_photonView.IsMine)
-		{
-			return;
-		}
+		//if (!_photonView.IsMine)
+		//{
+		//	return;
+		//}
 		//grounded
 		if(animator) isGrounded = animator.animator.GetBool("isGrounded");
 
@@ -160,10 +160,10 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject> {
 
 	//physics update
 	void FixedUpdate(){
-		if (!_photonView.IsMine)
-		{
-			return;
-		}
+		//if (!_photonView.IsMine)
+		//{
+		//	return;
+		//}
 		
 		if (updateVelocity){
 			rb.velocity = fixedVelocity;
@@ -174,10 +174,10 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject> {
 	//late Update
 	void LateUpdate(){
 		
-		if (!_photonView.IsMine)
-		{
-			return;
-		}
+		//if (!_photonView.IsMine)
+		//{
+		//	return;
+		//}
 
 		//apply any root motion offsets to parent
 		if(animator && animator.GetComponent<Animator>().applyRootMotion && animator.transform.localPosition != Vector3.zero) {
@@ -195,10 +195,10 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject> {
 		
 	//movement input event
 	void MovementInputEvent(Vector2 inputVector){
-		if (!_photonView.IsMine)
-		{
-			return;
-		}
+		//if (!_photonView.IsMine)
+		//{
+		//	return;
+		//}
 		
 		int dir = Mathf.RoundToInt(Mathf.Sign((float)-inputVector.x));
 		if(Mathf.Abs(inputVector.x)>0) currentDirection = (DIRECTION)dir;
@@ -207,10 +207,10 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject> {
 	#region Combat Input Events
 	//combat input event
 	private void CombatInputEvent(INPUTACTION action) {
-		if (!_photonView.IsMine)
-		{
-			return;
-		}
+		//if (!_photonView.IsMine)
+		//{
+		//	return;
+		//}
 		
 		if (AttackStates.Contains (m_playerState.currentState) && !isDead) {
 
@@ -419,8 +419,8 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject> {
 
 		//set defence on/off
 	private void Defend(bool defend){
-		if(!_photonView.IsMine)
-		return;
+		//if(!_photonView.IsMine)
+		//return;
 		
 		animator.SetAnimatorBool("Defend", defend);
 		//_photonView.RPC("RPC_DefendAnim", RpcTarget.All, defend);
