@@ -19,7 +19,11 @@ public class RoomListItem : MonoBehaviour
     
     public void OnClick()
     {
-        Launcher.Instance.JoinRoom(info);
+        if (info.MaxPlayers <= 3)
+        {
+            Launcher.Instance.JoinRoom(info);
+        }
+        
     }
 
     public void GetPlayerInfo(RoomInfo r)
