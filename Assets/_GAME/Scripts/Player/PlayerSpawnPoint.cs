@@ -32,28 +32,31 @@ public class PlayerSpawnPoint : MonoBehaviour
 	//load a player prefab
 	void loadPlayer(GameObject playerPrefab)
 	{
-		if (defaultPlayerPrefab == null)
-		{
-			Debug.Log("Player Prefabs I was not assigned yet!");
-			return;
-		}
+        if (defaultPlayerPrefab == null)
+        {
+            Debug.Log("Player Prefabs I was not assigned yet!");
+            return;
+        }
 
-		if (PhotonNetwork.IsConnected)
-		{
-			// Vector3 p = Vector3.zero;
-			// Quaternion r = Quaternion.identity;
-			//GetSpawnPoint(out p, out r);
-			Vector3 p = SpawnPoint[PhotonNetwork.LocalPlayer.ActorNumber - 1].transform.position;
-			Quaternion r = SpawnPoint[PhotonNetwork.LocalPlayer.ActorNumber - 1].transform.rotation;
-		
-			m_Player = PhotonNetwork.Instantiate(playerPrefab.name,p,r, 0);
-			m_ViewID = m_Player.GetViewID();
-		}
-		
-		
-		
-		// GameObject player = GameObject.Instantiate(playerPrefab) as GameObject;
-		// player.transform.position = transform.position;
+		if(GameStateManager.Instance._gameState == GameState.Multiplayer)
+        {
+			if (PhotonNetwork.IsConnected)
+			{
+				// Vector3 p = Vector3.zero;
+				// Quaternion r = Quaternion.identity;
+				//GetSpawnPoint(out p, out r);
+				Vector3 p = SpawnPoint[PhotonNetwork.LocalPlayer.ActorNumber - 1].transform.position;
+				Quaternion r = SpawnPoint[PhotonNetwork.LocalPlayer.ActorNumber - 1].transform.rotation;
+
+				m_Player = PhotonNetwork.Instantiate(playerPrefab.name, p, r, 0);
+				m_ViewID = m_Player.GetViewID();
+			}
+        }
+        else
+        {
+            GameObject player = GameObject.Instantiate(playerPrefab) as GameObject;
+            player.transform.position = transform.position;
+        }
 	}
 	
 	
