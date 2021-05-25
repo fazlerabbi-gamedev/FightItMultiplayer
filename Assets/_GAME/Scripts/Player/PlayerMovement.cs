@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
 	public bool isGrounded;
 
 	private bool isDead = false;
-	private Vector3 fixedVelocity;
+	public Vector3 fixedVelocity;
 	private bool updateVelocity;
 	private Plane[] frustrumPlanes; //camera view frustrum
 	public bool playerInCameraView; //true if the player bounds are inside the camera view
@@ -143,8 +143,10 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
 		fixedVelocity = velocity;
 		updateVelocity = true;
 	}
+	
 
 	//user input
+
 	void InputEvent(Vector2 dir) {
 		if (GameStateManager.Instance._gameState == GameState.Multiplayer)
 		{
@@ -163,6 +165,7 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
 			}
 		}
 	}
+	
 
 	//input actions
 	void InputEventAction(INPUTACTION action) {
@@ -254,24 +257,29 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
 	}
 
 	//move while on the ground
-	void MoveGrounded() {
+	public void MoveGrounded() {
 
 		//don't move while landing from a jump
-		if(playerState.currentState == UNITSTATE.LAND) {
+		if(playerState.currentState == UNITSTATE.LAND) 
+		{
 			return;
 		}
 
 		//set rigidbody velocity
-		if(rb != null && (inputDirection.sqrMagnitude > 0) && !WallInFront() && PlayerInsideCamViewArea()) {
+		if(rb != null && (inputDirection.sqrMagnitude > 0) && !WallInFront() && PlayerInsideCamViewArea()) 
+		{
 			SetVelocity(new Vector3(inputDirection.x * -walkSpeed, rb.velocity.y + Physics.gravity.y * Time.fixedDeltaTime, inputDirection.y * -ZSpeed));
 			setPlayerState(UNITSTATE.WALK);
-		} else {
+		} 
+		else 
+		{
 			SetVelocity(new Vector3(0, rb.velocity.y + Physics.gravity.y * Time.fixedDeltaTime, 0));
 			setPlayerState(UNITSTATE.IDLE);
 		}
 
 		//allow up/down movement when the player is at the edge of the screen
-		if(!PlayerInsideCamViewArea() && Mathf.Abs(inputDirection.y) > 0) {
+		if(!PlayerInsideCamViewArea() && Mathf.Abs(inputDirection.y) > 0) 
+		{
 			Vector3 dirToCam = (transform.position - Camera.main.transform.position) * inputDirection.y;
 			SetVelocity(new Vector3(dirToCam.x, rb.velocity.y + Physics.gravity.y * Time.fixedDeltaTime, dirToCam.z));
 		}
@@ -290,12 +298,6 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
 
 		//look towards traveling direction
 		LookToDir(currentDirection);
-	}
-	
-	[PunRPC]
-	public void RPC_PlayerMove()
-	{
-		
 	}
 
 	//move while in the air
@@ -429,7 +431,7 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
 			transform.position = (Vector3) stream.ReceiveNext();
 			transform.rotation = (Quaternion) stream.ReceiveNext();
 			rb.velocity = (Vector3) stream.ReceiveNext();
-
+		
 			float lag = Mathf.Abs((float) (PhotonNetwork.Time - info.timestamp));
 			transform.position += rb.velocity * lag;
 		}
