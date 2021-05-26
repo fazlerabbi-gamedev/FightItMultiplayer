@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
-public class EnemyAI : EnemyActions, IDamagable<DamageObject>{
+public class EnemyAI : EnemyActions, IDamagable<DamageObject>
+{
 
 	[Space(10)]
 	public bool enableAI;
@@ -153,7 +155,6 @@ public class EnemyAI : EnemyActions, IDamagable<DamageObject>{
 		if(enemyState == UNITSTATE.KNOCKDOWNGROUNDED) {
 			StartCoroutine(GroundHit());
 		} else {
-
 			//normal death
 			animator.SetAnimatorTrigger("Death");
 		}
@@ -163,6 +164,11 @@ public class EnemyAI : EnemyActions, IDamagable<DamageObject>{
 		enemyState = UNITSTATE.DEATH;
 		DestroyUnit();
 	}
+	
+	
+	
+	
+	
 }
 
 public enum ENEMYTACTIC {
