@@ -14,6 +14,8 @@ public class GameRoomManager : MonoBehaviourPunCallbacks
     public GameObject m_player { get; set; }
     Vector3 t;
     Quaternion r;
+
+    private string playerName;
     void Awake()
     {
         Instance = this;
@@ -24,7 +26,7 @@ public class GameRoomManager : MonoBehaviourPunCallbacks
         // }
         // DontDestroyOnLoad(gameObject);
         // Instance = this;
-
+        
         SpawnPlayer();
     }
     
@@ -43,8 +45,15 @@ public class GameRoomManager : MonoBehaviourPunCallbacks
         
         t = SpawnPoint[PhotonNetwork.LocalPlayer.ActorNumber - 1].transform.position;
         r = Quaternion.identity;
-            
-        m_player = PhotonNetwork.Instantiate(_playerPrefab.name, t, r, 0);
+        if (GlobalPlayerData.Player1Prefab != null)
+        {
+            playerName = GlobalPlayerData.Player1Prefab.name;
+        }
+        else
+        {
+            playerName = _playerPrefab.name;
+        }
+        m_player = PhotonNetwork.Instantiate(playerName, t, r, 0);
         
         
     }

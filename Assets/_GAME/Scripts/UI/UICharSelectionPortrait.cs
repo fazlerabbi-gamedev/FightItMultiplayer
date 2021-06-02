@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
@@ -17,6 +18,8 @@ public class UICharSelectionPortrait : MonoBehaviour, IPointerEnterHandler, IPoi
 
 	[Header("HUD Portrait")]
 	public Sprite HUDPortrait;
+
+	
 
 	//on mouse enter
 	public void OnPointerEnter(PointerEventData eventData){

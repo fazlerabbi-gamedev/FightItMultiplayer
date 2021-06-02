@@ -35,8 +35,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 
 
     private VivoxVoiceManager _vivoxVoiceManager;
-    
-    
+
+
     
     
 
@@ -64,17 +64,17 @@ public class Launcher : MonoBehaviourPunCallbacks
     void Start()
     {
         Init();
-        
-        
+        startGameButton.SetActive(false);
     }
+    
 
 
     private void Init()
     {
-        
-        
         PhotonNetwork.ConnectUsingSettings();
     }
+
+
 
     #endregion
 
@@ -166,6 +166,12 @@ public class Launcher : MonoBehaviourPunCallbacks
             Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(players[i]);
         }
         
+
+       // startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+    }
+
+    public void ShowStartButton()
+    {
         startGameButton.SetActive(PhotonNetwork.IsMasterClient);
     }
     
