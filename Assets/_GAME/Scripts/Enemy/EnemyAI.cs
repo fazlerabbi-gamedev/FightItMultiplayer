@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
-public class EnemyAI : EnemyActions, IDamagable<DamageObject>
+public class EnemyAI : EnemyActions, IDamagable<DamageObject>, IPunObservable
 {
 
 	[Space(10)]
@@ -165,6 +165,27 @@ public class EnemyAI : EnemyActions, IDamagable<DamageObject>
 		DestroyUnit();
 	}
 	
+	
+	//
+	
+	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+	{
+		if (stream.IsWriting)
+		{
+			stream.SendNext(transform.position);
+			stream.SendNext(transform.rotation);
+			stream.SendNext(rb.velocity);
+		}
+		else
+		{
+			transform.position = (Vector3) stream.ReceiveNext();
+			transform.rotation = (Quaternion) stream.ReceiveNext();
+			rb.velocity = (Vector3) stream.ReceiveNext();
+		
+			float lag = Mathf.Abs((float) (PhotonNetwork.Time - info.timestamp));
+			transform.position += rb.velocity * lag;
+		}
+	}
 	
 	
 	
