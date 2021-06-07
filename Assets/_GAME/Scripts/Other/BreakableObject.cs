@@ -33,8 +33,17 @@ public class BreakableObject : MonoBehaviour, IDamagable<DamageObject> {
 		//spawn destroyed gameobject version
 		if (destroyedGO != null) 
 		{
-		//	GameObject BrokenGO = GameObject.Instantiate (destroyedGO);
-		GameObject BrokenGO = PhotonNetwork.Instantiate(destroyedGO.name, transform.position, Quaternion.identity);
+			GameObject BrokenGO = null;
+			//	GameObject BrokenGO = GameObject.Instantiate (destroyedGO);
+			if (GameStateManager.Instance._gameState == GameState.Singleplayer)
+            {
+				BrokenGO = GameObject.Instantiate(destroyedGO);
+            }
+            else
+            {
+				BrokenGO = PhotonNetwork.Instantiate(destroyedGO.name, transform.position, Quaternion.identity);
+			}
+				
 			//BrokenGO.transform.position = transform.position;
 
 			//chance direction based on the impact direction
@@ -59,7 +68,15 @@ public class BreakableObject : MonoBehaviour, IDamagable<DamageObject> {
 		//destroy 
 		if (destroyOnHit) 
 		{
-		PhotonNetwork.Destroy(this.gameObject);
+			if (GameStateManager.Instance._gameState == GameState.Singleplayer)
+            {
+				Destroy(this.gameObject);
+			}
+            else
+            {
+				PhotonNetwork.Destroy(this.gameObject);
+			}
+				
 		}
 	}
 	

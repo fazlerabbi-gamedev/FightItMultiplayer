@@ -2,7 +2,7 @@
 using Photon.Realtime;
 using UnityEngine;
 
-public class WeaponPickup : MonoBehaviour, IPunObservable {
+public class WeaponPickup : MonoBehaviour {
 
 	[Header("Weapon Settings")]
 	public Weapon weapon;
@@ -68,25 +68,6 @@ public class WeaponPickup : MonoBehaviour, IPunObservable {
 		if(pc) pc.equipWeapon(weapon);
 	}
 	
-	
-	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-	{
-		if (stream.IsWriting)
-		{
-			stream.SendNext(transform.position);
-			stream.SendNext(transform.rotation);
-			stream.SendNext(_pickRb.velocity);
-		}
-		else
-		{
-			transform.position = (Vector3) stream.ReceiveNext();
-			transform.rotation = (Quaternion) stream.ReceiveNext();
-			_pickRb.velocity = (Vector3) stream.ReceiveNext();
-
-			float lag = Mathf.Abs((float) (PhotonNetwork.Time - info.timestamp));
-			transform.position += _pickRb.velocity * lag;
-		}
-	}
 
 	#if UNITY_EDITOR 
 
