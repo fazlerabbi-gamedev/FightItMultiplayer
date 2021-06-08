@@ -13,12 +13,26 @@ public class CinematicPlayerAdder : MonoBehaviour
     private void Start()
     {
         playabledirector = GetComponent<PlayableDirector>();
-        InitSequence(0);
+        InitSequence(PlayerPrefs.GetInt(GlobalPlayerData.pPrefs_GameSeq, 0));
 
     }
     private void InitSequence(int i)
     {
-        playabledirector.playableAsset = timelines[i];
-        playabledirector.Play();
+        
+        if (i == 1)
+        {
+            playabledirector.playableAsset = timelines[i];
+            playabledirector.Play();
+        }
+        if (i == 2)
+        {
+            playabledirector.playableAsset = timelines[i];
+            playabledirector.Play();
+        }
+        if (i == 3)
+        {
+            playabledirector.playableAsset = timelines[i];
+            playabledirector.Play();
+        }
     }
 }

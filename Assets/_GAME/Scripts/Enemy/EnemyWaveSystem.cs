@@ -133,7 +133,11 @@ public class EnemyWaveSystem : MonoBehaviour {
 	}
 
 	//Level complete
-	IEnumerator LevelComplete(){
+	IEnumerator LevelComplete()
+	{
+		int i = PlayerPrefs.GetInt(GlobalPlayerData.pPrefs_GameSeq, 0);
+		i += 1;
+		PlayerPrefs.SetInt(GlobalPlayerData.pPrefs_GameSeq, i);
 
 		//activate slow motion effect
 		if (activateSlowMotionOnLastHit) {

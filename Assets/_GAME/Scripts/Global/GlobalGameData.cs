@@ -6,4 +6,6 @@ using UnityEngine.UI;
 public static class GlobalPlayerData  {
 	public static GameObject Player1Prefab;
 	public static Sprite PlayerHUDPortrait;
+
+	public static string pPrefs_GameSeq = "GameSequence";
 }
