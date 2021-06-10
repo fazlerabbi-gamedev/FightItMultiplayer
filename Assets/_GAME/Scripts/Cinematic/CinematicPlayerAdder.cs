@@ -21,17 +21,17 @@ public class CinematicPlayerAdder : MonoBehaviour
         
         if (i == 1)
         {
-            playabledirector.playableAsset = timelines[i];
+            playabledirector.playableAsset = timelines[i-1];
             playabledirector.Play();
         }
         if (i == 2)
         {
-            playabledirector.playableAsset = timelines[i];
+            playabledirector.playableAsset = timelines[i-1];
             playabledirector.Play();
         }
         if (i == 3)
         {
-            playabledirector.playableAsset = timelines[i];
+            playabledirector.playableAsset = timelines[i-1];
             playabledirector.Play();
         }
     }
